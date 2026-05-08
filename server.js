@@ -1,12 +1,25 @@
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
 dotenv.config();
-connectDB();
+connectDB().then(() => {
+  require('./cron/pricePoller');
+  console.log('[Server] Price polling cron job started');
+});
 
 const app = express();
 app.use(express.json());
+app.use(helmet());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { error: 'Too many requests, try again later' }
+});
+app.use('/api/', limiter);
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));

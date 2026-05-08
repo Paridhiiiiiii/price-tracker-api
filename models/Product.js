@@ -11,8 +11,9 @@ const productSchema = new mongoose.Schema({
     required: true
   },
   url: {
-    type: String,
-    required: true
+  type: String,
+  required: true,
+  trim: true
   },
   currentPrice: {
     type: Number,
@@ -27,5 +28,7 @@ const productSchema = new mongoose.Schema({
     default: 'general'
   }
 }, { timestamps: true });
+
+productSchema.index({ name: 'text' });
 
 module.exports = mongoose.model('Product', productSchema);

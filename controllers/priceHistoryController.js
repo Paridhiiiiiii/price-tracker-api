@@ -1,15 +1,22 @@
 const PriceHistory = require('../models/PriceHistory');
 
-// Get price history for a product
+// Get price history for a product (with pagination)
 const getProductHistory = async (req, res) => {
   try {
+    const { page = 1, limit = 20, sort = 'desc' } = req.query;
+
     const history = await PriceHistory.find({
       product: req.params.productId
-    }).sort({ createdAt: -1 });
+    })
+      .sort({ createdAt: sort === 'desc' ? -1 : 1 })
+      .skip((page - 1) * parseInt(limit))
+      .limit(parseInt(limit));
 
     if (!history.length) {
       return res.status(404).json({ message: 'No price history found' });
     }
+
+    const total = await PriceHistory.countDocuments({ product: req.params.productId });
 
     // Calculate overall stats
     const highestPrice = Math.max(...history.map(h => h.oldPrice));
@@ -20,6 +27,9 @@ const getProductHistory = async (req, res) => {
     res.status(200).json({
       success: true,
       count: history.length,
+      total,
+      page: parseInt(page),
+      pages: Math.ceil(total / limit),
       stats: {
         highestPrice,
         lowestPrice,
