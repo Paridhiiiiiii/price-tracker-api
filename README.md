@@ -27,37 +27,47 @@ A scalable RESTful backend API built with Node.js, Express.js, and MongoDB that 
 
 ## 📁 Project Structure
 
+```bash
 price-tracker/
+│
 ├── config/
 │   ├── db.js
 │   └── mailer.js
+│
 ├── controllers/
 │   ├── authController.js
 │   ├── productController.js
 │   ├── alertController.js
 │   └── priceHistoryController.js
+│
 ├── cron/
 │   └── pricePoller.js
+│
 ├── middleware/
 │   └── authMiddleware.js
+│
 ├── models/
 │   ├── User.js
 │   ├── Product.js
 │   ├── Alert.js
 │   └── PriceHistory.js
+│
 ├── routes/
 │   ├── authRoutes.js
 │   ├── productRoutes.js
 │   ├── alertRoutes.js
 │   └── priceHistoryRoutes.js
+│
 ├── scraper/
 │   └── scrapePrice.js
+│
 ├── tests/
 │   └── product.test.js
+│
 ├── .env
 ├── package.json
 └── server.js
-
+```
 ## 📡 API Endpoints
 
 ### Auth
@@ -136,5 +146,4 @@ npm run dev
 
 **Paridhi Sharma**
 - LinkedIn: [linkedin.com/in/paridhi-sharma-26b735313](https://linkedin.com/in/paridhi-sharma-26b735313)
-- GitHub: [github.com/Paridhiiiiiii](https://github.com/Paridhiiiiiii)
 - GitHub: [github.com/Paridhiiiiiii](https://github.com/Paridhiiiiiii)
